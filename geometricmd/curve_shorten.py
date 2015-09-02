@@ -39,6 +39,22 @@ def compute_Q_I_matrix(points, Q_I_matric):
 
 
 def Q_I_metric(point,g_function):
+    """The function to calculate the inverse matrix Q.
+    Args:
+
+        point(numpy.array) :
+            Array of vector in dimension R^3N space. This vector is repasented as the points in curve.
+
+        g_function (func):
+            this function is given by user in k_g_function directionary.
+
+    Return :
+        Q_I_matrix (numpy.array.matrix):
+            Q_I_matrix is given by the certain point and function g(x). Q=g*g^T+\epsilon norm(0,0.001)
+
+
+
+    """
     g_matrix=g_function(point)
     dimension=len(point)
     Q_matrix = np.zeros([dimension, dimension])
@@ -46,7 +62,7 @@ def Q_I_metric(point,g_function):
         for j in range(dimension):
             for k in range(3):
                 Q_matrix[i][j] += g_matrix[k][i] * g_matrix[k][j]
-            Q_matrix[i][j] += + np.random.normal(0, 0.001)
+            Q_matrix[i][j] +=  np.random.normal(0, 0.001)
     rank = np.linalg.matrix_rank(Q_matrix)
 
     Q_I_matrix = linalg.inv(Q_matrix)
